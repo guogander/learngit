@@ -51,7 +51,7 @@ if __name__ == '__main__':
     subject = str(sys.argv[2])  #zabbix传过来的第二个参数
     content = str(sys.argv[3])  #zabbix传过来的第三个参数
  
-    corpid =  'ww45c4555ca2be5f23'   #CorpID是企业号的标识 根据自己的换掉
-    corpsecret = 'aVYFp2FS7GOiuoSc0Tfz3pwKIL9CbQO75QlwfTm_UXc'  #Secret 也需要更换
+    corpid =  'ww45xxxxxca2be5f23'   #CorpID是企业号的标识 根据自己的换掉
+    corpsecret = 'aVYFp2FS7GOiuoSc0Tfz3pwKIL9CbQO75Qlxxxxxxxx'  #Secret 也需要更换
     accesstoken = gettoken(corpid,corpsecret)
     senddata(accesstoken,user,subject,content)
