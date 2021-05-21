@@ -114,3 +114,17 @@ PermitRootLogin yes
 >
 >解决方法：命令  ssh-keygen -R "你的远程服务器ip地址"   清除缓存秘钥
 
+## 删除文件夹所有的文件
+
+```shell
+rv -rf '文件夹'
+```
+
+## 查看端口占用
+
+```shell
+netstat -tunlp | grep 端口号
+```
+
+
+
