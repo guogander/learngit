@@ -126,5 +126,12 @@ rv -rf '文件夹'
 netstat -tunlp | grep 端口号
 ```
 
+## 防火墙
 
+```shell
+# 关闭防火墙
+# CentOS6.7
+service iptables stop
+chkconfig iptables off
+```
 
