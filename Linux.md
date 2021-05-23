@@ -1,5 +1,5 @@
 # Linux相关需求解决办法
-## 虚拟机安装VM-tools失败
+## 安装VM-tools失败
 
 ```shell
 apt-get install open-vm-tools
@@ -11,6 +11,8 @@ apt-get install open-vm-tools-desktop
 ```shell
  sudo passwd root
  su
+ # Amazon Linux 2以及某些版本Linux
+ sudo passwd
 ```
 
 ## 显示隐藏的目录
@@ -46,7 +48,7 @@ sudo nautilus
 
 ## Ubuntu18.04虚拟机设置静态IP
 
-搜索netplan，打开yaml文件，修改文件
+vim /etc/netplan/XX-installer-config.yaml，打开yaml文件，修改文件：
 
 ```yaml
 # Let NetworkManager manage all devices on this system
@@ -128,10 +130,31 @@ netstat -tunlp | grep 端口号
 
 ## 防火墙
 
+### CentOS
+
 ```shell
 # 关闭防火墙
 # CentOS6.7
 service iptables stop
 chkconfig iptables off
+# CentOS7.9
+systemctl stop firewalld
+systemctl disable firewalld
+```
+
+### Ubuntu
+
+```shell
+systemctl stop firewalld
+systemctl disable firewalld
+```
+
+
+
+## Windows本地文件传输到Linux
+
+```shell
+# scp命令
+scp E:\IDM下载文件\jdk-16.0.1_linux-aarch64_bin.tar.gz root@192.168.201.250:/opt/data
 ```
 
