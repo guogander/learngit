@@ -91,14 +91,14 @@ systemctl start network.service
 ## SSH
 
 ```shell
-#apt-get install openssh-client
+# ubuntu18.04
 apt-get install openssh-server
 ```
 
 打开 sshd_config 配置文件,远程连接修改
 
 ```shell
-gedit /etc/ssh/sshd_config 
+vim /etc/ssh/sshd_config 
 # 此行取消注释，并改为yes
 #PermitRootLogin prohibit-password
 PermitRootLogin yes
@@ -128,7 +128,7 @@ rv -rf '文件夹'
 netstat -tunlp | grep 端口号
 ```
 
-## 防火墙
+## 防火墙&SELinux
 
 ### CentOS
 
@@ -140,6 +140,10 @@ chkconfig iptables off
 # CentOS7.9
 systemctl stop firewalld
 systemctl disable firewalld
+# 关闭selinux
+vim /etc/selinux/config
+# 修改内容为
+SELINUX=disable
 ```
 
 ### Ubuntu
@@ -156,5 +160,12 @@ systemctl disable firewalld
 ```shell
 # scp命令
 scp E:\IDM下载文件\jdk-16.0.1_linux-aarch64_bin.tar.gz root@192.168.201.250:/opt/data
+```
+
+## Linux 命令行添加内容
+
+```shell
+ # eg：
+ echo 192.168.1.21 master >> /etc/hosts
 ```
 
