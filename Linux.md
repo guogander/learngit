@@ -29,11 +29,16 @@ ctrl+alt+t
 
 ## 解压缩
 
-```shell
+```bash
 # 压缩
 tar -zcvf 文件名  
 # 解压缩
 tar -zxvf 文件名.tar.gz 
+
+# 压缩etc目录到/data路径，压缩名为etc.tar.gz
+tar -zcvf /data/etc.tar.gz /etc # 快
+
+tar -Jcvf /data/etc.tar.xz /etc # 慢 压缩比高
 ```
 
 ## 运行sh脚本
@@ -46,11 +51,14 @@ tar -zxvf 文件名.tar.gz
 sudo nautilus
 ```
 
-## Ubuntu18.04虚拟机设置静态IP
+## 设置静态IP
 
-vim /etc/netplan/XX-installer-config.yaml，打开yaml文件，修改文件：
+### Ubuntu
 
 ```yaml
+# Ubuntu 18.04
+vim /etc/netplan/XX-installer-config.yaml
+# 打开yaml文件，修改文件内容：
 # Let NetworkManager manage all devices on this system
 network:
   version: 2
@@ -67,6 +75,26 @@ network:
 
 ```shell
 sudo netplan apply
+```
+
+### CentOS
+
+```shell
+# CentOS7.9
+vim /etc/sysconfig/network-scripts/ifcfg-ens33
+# 修改内容
+BOOTPROTO=static
+ONBOOT=yes
+IPADDR=192.168.201.122 # 静态IP地址
+NETMASK=255.255.255.0
+GATEWAY=192.168.201.2
+DNS1=192.168.201.2
+```
+
+重启网络：
+
+```shell
+systemctl restart network
 ```
 
 ## 解决虚拟机没网
@@ -119,12 +147,15 @@ PermitRootLogin yes
 ## 删除文件夹所有的文件
 
 ```shell
-rv -rf '文件夹'
+rm -f '文件夹'
+# 慎用
+rm -vf '文件夹'
 ```
 
 ## 查看端口占用
 
 ```shell
+ss -ntl
 netstat -tunlp | grep 端口号
 ```
 
@@ -162,7 +193,7 @@ systemctl disable firewalld
 scp E:\IDM下载文件\jdk-16.0.1_linux-aarch64_bin.tar.gz root@192.168.201.250:/opt/data
 ```
 
-## Linux 命令行添加内容
+## Linux 命令行向文件添加内容
 
 ```shell
  # eg：
