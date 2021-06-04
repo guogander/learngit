@@ -159,6 +159,25 @@ ss -ntl
 netstat -tunlp | grep 端口号
 ```
 
+## 进程
+
+```bash
+# 杀死进程
+kill -9 pid
+# 0信号查看进程是否存在
+killall -0 nginx
+```
+
+## 查看是否安装包
+
+```bash
+rpm -qi '包名'
+```
+
+
+
+
+
 ## 防火墙&SELinux
 
 ### CentOS
