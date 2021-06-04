@@ -1,3 +1,28 @@
+## 提交到review审核
+
+### 第一次提交
+
+```bash
+# 提交之前先同步网站最新代码，避免出现冲突
+git fetch
+# git rebase origin/master
+git add .
+git commit -m "提交信息"
+# 提交平台审核
+git review
+```
+
+### 修改后提交
+
+```bash
+git fetch
+git add .
+git commit --amend
+git review
+```
+
+
+
 ## 创建版本库
 
 ### 把目录变成Git可以管理的仓库
@@ -241,16 +266,22 @@ Switched to branch 'dev'
 ```git
 $ git checkout dev  # 切换分支
 Switched to branch 'dev'
+
+#切换远程分支
+git checkout -b dev
 ```
 
 ### 查看分支
 
-`git branch`命令查看分支,列出所有分支,并在当前分支前面添加`*`号
+`git branch`命令查看本地分支,列出所有分支,并在当前分支前面添加`*`号
 
 ```git
 $ git branch
 * dev
   master
+
+# 查看远程分支
+git branch -a
 ```
 
 ### 合并dev分支到master上
@@ -295,3 +326,5 @@ $ git switch master
 ```git
 $ git log --graph --pretty=oneline
 ```
+
+![image-20210531141016698](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210531141016698.png)
