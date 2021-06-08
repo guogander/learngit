@@ -8,12 +8,17 @@ git fetch
 # git rebase origin/master
 git add .
 git commit -m "提交信息"
+<<<<<<< HEAD
 # git commit --amend  # 可修改提交信息，添加Jira等
 # 提交平台审核
 git review
 
 # git review -t UOSP-2332
 # 这样可以把提交的topic设置上，便于后续跟踪
+=======
+# 提交平台审核
+git review
+>>>>>>> f8bc39049f50c14a5274d355de6279e9a96cc751
 ```
 
 ### 修改后提交
@@ -21,7 +26,11 @@ git review
 ```bash
 git fetch
 git add .
+<<<<<<< HEAD
 git commit --amend  # 可修改提交信息，添加Jira等
+=======
+git commit --amend
+>>>>>>> f8bc39049f50c14a5274d355de6279e9a96cc751
 git review
 ```
 
