@@ -110,7 +110,7 @@ sudo service network-manager start
 # CentOS7.9
 # 没网报错 Failed to start LSB: Bring up/down
 systemctl stop NetworkManager
-systemctl disable NetworkManager
+systemctl disable NetworkManager  # 此步骤可省
 systemctl start network.service
 ```
 
@@ -218,4 +218,28 @@ scp E:\IDM下载文件\jdk-16.0.1_linux-aarch64_bin.tar.gz root@192.168.201.250:
  # eg：
  echo 192.168.1.21 master >> /etc/hosts
 ```
+
+## Linux自带python切换
+
+```python
+进入/usr/bin目录：
+[root@ localhost bin]# pwd
+/usr/bin
+将原有python执行程序备份：
+
+[root@ localhost bin]# mv python python-bk
+添加python3.7的软连接：
+
+[root@ localhost bin]# ln -s python3.7 python
+4.2 验证python版本
+验证python现在的版本：
+
+[root@ localhost bin]# python -V
+Python 3.7.2
+
+```
+
+切换版本yum报错：
+
+[ Centos 7 安装 Python3.5.2后yum不能正常使用](https://blog.csdn.net/degrade/article/details/52814296?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control)
 

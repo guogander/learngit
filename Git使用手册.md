@@ -24,6 +24,13 @@ git commit --amend  # 可修改提交信息，添加Jira等
 git review
 ```
 
+### 第一次提交多余文件
+
+```bash
+# 上次提交了多余的test.txt文件，下一次提交需要删除该文件
+git rm test.txt
+```
+
 
 
 ## 创建版本库
