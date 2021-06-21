@@ -222,24 +222,74 @@ scp E:\IDM下载文件\jdk-16.0.1_linux-aarch64_bin.tar.gz root@192.168.201.250:
 ## Linux自带python切换
 
 ```python
-进入/usr/bin目录：
+# 进入/usr/bin目录：
 [root@ localhost bin]# pwd
 /usr/bin
-将原有python执行程序备份：
-
+# 将原有python执行程序备份：
 [root@ localhost bin]# mv python python-bk
-添加python3.7的软连接：
-
+#添加python3.7的软连接：
 [root@ localhost bin]# ln -s python3.7 python
-4.2 验证python版本
-验证python现在的版本：
+# 验证python版本
+# 验证python现在的版本：
 
 [root@ localhost bin]# python -V
 Python 3.7.2
 
 ```
 
-切换版本yum报错：
+切换python版本yum报错：
+
+> /usr/bin 关于yum的文件进行修改为python3
 
 [ Centos 7 安装 Python3.5.2后yum不能正常使用](https://blog.csdn.net/degrade/article/details/52814296?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control)
+
+## Tmux基本使用
+
+> [Tmux 使用教程 - 阮一峰的网络日志 ](http://www.ruanyifeng.com/blog/2019/10/tmux.html)
+>
+> 在远程ssh连接的时候防止超时断开进程，使用tmux可以保证
+
+### 安装
+
+```bash
+# CentOS/Fedora
+$ sudo yum install tmux
+# Ubuntu/Debian
+$ sudo apt-get install tmux
+# Mac
+$ brew install tmux
+```
+
+### 基本使用
+
+启动窗口(会话)：
+
+```bash
+tmux
+```
+
+查看有哪些窗口:
+
+```bash
+tmux ls
+```
+
+进入0号窗口:
+
+```bash
+tmux a -t 0
+```
+
+上下滚屏：
+
+```bash
+ctrl+b 松开 按"["进入编辑模式，接着按上下键进行上下滚动
+退出编辑模式按ESC
+```
+
+退出tmux：
+
+```bash
+ctrl+b 松开 按d
+```
 
