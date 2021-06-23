@@ -31,6 +31,20 @@ git review
 git rm test.txt
 ```
 
+### rebase
+
+```bash
+git fetch --all
+git rebase gerrit/master
+git review
+```
+
+### 撤销工作空间改动代码，撤销commit，撤销git add . 
+
+```bash
+git reset --hard
+```
+
 
 
 ## 创建版本库
