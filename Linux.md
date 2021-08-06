@@ -118,6 +118,8 @@ systemctl start network.service
 
 ## SSH
 
+### 安装ssh
+
 ```shell
 # ubuntu18.04
 apt-get install openssh-server
@@ -137,6 +139,19 @@ PermitRootLogin yes
 （/etc/init.d/ssh stop #关闭SSH服务）
 查看ssh服务：ps -e | grep ssh
 ```
+
+### 免密登陆
+
+```bash
+ssh-keygen -t rsa  # 生成密钥
+# ssh-keygen - 生成、管理和转换认证密钥，包括 RSA 和 DSA 两种密钥
+# 密钥类型可以用 -t 选项指定。如果没有指定则默认生成用于SSH-2的RSA密钥
+ssh-copy-id <target_ip>  # 将公钥复制到目标主机实现免密登陆
+```
+
+
+
+### 错误解决
 
 >cmd ssh远程连接虚拟机，错误信息：
 >
@@ -174,9 +189,14 @@ killall -0 nginx
 rpm -qi '包名'
 ```
 
+## RPM使用
 
-
-
+```bash
+# 选项有 -q -R -i
+rpm -q ansible # 查看是否安装ansible
+rpm -qi ansible # 查看是否安装ansible并返回软件详细信息
+rpm -qR ansible  # 查看安装ansible包所需的依赖
+```
 
 ## 防火墙&SELinux
 
@@ -203,7 +223,37 @@ systemctl stop firewalld
 systemctl disable firewalld
 ```
 
+## iptables
 
+> 管理防火墙规则
+>
+> iptables具有Filter，NAT，Mangle，Raw四种内建表
+
+```bash
+#iptables -t filter -L  查看filter表
+#iptables -t nat  -L    查看nat表
+#iptables -t mangel -L 查看mangel表
+#iptables -t raw  -L 查看Raw表
+
+# 查看开放的端口
+iptables -nL
+# 开放8880端口（没有到主机的路由）
+iptables -I INPUT -p tcp --dport 8880 -j ACCEPT
+# 命令用于将linux内核中的iptables表导出到标准输出设备商，通常，使用shell中I/O重定向功能将其输出保存到指定文件中。
+iptables-save 
+
+# 添加端口转发
+iptables -t nat -A PREROUTING -p tcp --dport 1000:20000 -j DNAT --to-destination 192.168.201.125
+# 将本机1000:20000的端口转发至192.168.201.125
+
+# 本机端口转发
+iptables -t nat -I PREROUTING -p tcp --dport 8880 -j REDIRECT --to-ports 8880   # -I插入规则到最前面
+
+# 列出端口转发规则以及序号
+iptables -t nat -L -n --line-numbers   # nat表
+# 根据序号删除，这里假如它的序号是1
+iptables -t nat -D PREROUTING 1   # 删除nat表的PREROUTING链序号为1的规则
+```
 
 ## Windows本地文件传输到Linux
 
@@ -215,7 +265,7 @@ scp E:\IDM下载文件\jdk-16.0.1_linux-aarch64_bin.tar.gz root@192.168.201.250:
 ## Linux 命令行向文件添加内容
 
 ```shell
- # eg：
+ # eg： 添加到文件末尾
  echo 192.168.1.21 master >> /etc/hosts
 ```
 
@@ -262,22 +312,14 @@ $ brew install tmux
 
 ### 基本使用
 
-启动窗口(会话)：
-
 ```bash
-tmux
-```
-
-查看有哪些窗口:
-
-```bash
-tmux ls
-```
-
-进入0号窗口:
-
-```bash
-tmux a -t 0
+tmux  # 启动新窗口(会话)
+tmux ls  # 查看有哪些窗口
+tmux a -t 0   # 进入0号窗口
+ctrl+b 松开 按d # 退出tmux
+tmux switch -t 1 # 切换窗口   切换到窗口1
+tmux kill-session -t 0  # 关闭会话0
+tmux rename -t 2 test # tmux列表重命名，方便记忆  将2重命名为test
 ```
 
 上下滚屏：
@@ -285,30 +327,6 @@ tmux a -t 0
 ```bash
 ctrl+b 松开 按"["进入编辑模式，接着按上下键进行上下滚动
 退出编辑模式按ESC
-```
-
-退出tmux：
-
-```bash
-ctrl+b 松开 按d
-```
-
-切换窗口：
-
-```bash
-tmux switch -t 1 # 切换到窗口1
-```
-
-更改窗口2编号为0:
-
-```bash
-tmux rename -t 2 0
-```
-
-关闭会话0:
-
-```bash
-tmux kill-session -t 0
 ```
 
 ## VIM基本使用
@@ -329,3 +347,62 @@ dG  # 清空文件
 # n键跳转到下一个字符串  N跳转上一个字符串
 ```
 
+## 查看动态文本
+
+```bash
+tail -f  <path>  # 查看日志有效
+```
+
+## sed
+
+```bash
+# sed引用变量需要使用单引号套住双引号，在双引号里面写入变量
+'"$变量名"'
+# sed替换有引号就使用双引号
+sed -i '/^123/d' /etc/hosts   # 删除123开头的行
+sed -i 's/123/456/g' /etc/hosts # 123替换为456
+```
+
+## curl以及wget使用
+
+### curl
+
+```bash
+# 用法
+curl [option] [url]
+# 选项
+# -o  将url下载的文件保存到指定路径文件
+curl -o /root/123.txt  http://192.168.201.122/index.html  # 将index.html文件保存到/root/并重命名为123.txt
+# -O 将url下载的文件以最后的文件名保存
+curl -O http://192.168.201.122/index.html   # 以index.html报存
+# 更多待补充
+```
+
+### wget
+
+```bash
+# 最常使用 直接wget url 下载文件  偏向于下载文件
+wget <url>
+```
+
+## shell命令获取IP地址
+
+```bash
+# 1
+seed_ip=$(ip a | grep ens33 | grep inet | awk '{print $2}' |sed 's/\/.*//')   # ens33为网卡名
+# 2
+ip=$(ifconfig "ens33" | grep "inet " | cut -f 10 -d " ")
+ip=$(ip a | grep eth0 | grep inet | cut -f 6 -d ' ' | cut -f 1 -d '/')
+# cut -f 6 -d ' '  以空格分隔返回第六个，后面同理
+hostname -I | cut -f 1 -d ' '
+```
+
+## httpd修改端口后重启报错
+
+```bash
+# 极可能原因是selinux端口标签不存在
+semanage port -l               #查看所有端口标签 
+semanage port -l | grep 8880   #查看8880端口标签
+semanage port -a -t http_port_t -p tcp 8880    # 新增标签
+# 增加之后应该就能重启了
+```

@@ -293,6 +293,9 @@ Switched to branch 'dev'
 
 #切换远程分支
 git checkout -b dev
+
+# 切换到远程分支
+gitcheckout -b <本地分支> origin/<远程分支>
 ```
 
 ### 查看分支
