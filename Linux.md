@@ -361,6 +361,10 @@ tail -f  <path>  # 查看日志有效
 # sed替换有引号就使用双引号
 sed -i '/^123/d' /etc/hosts   # 删除123开头的行
 sed -i 's/123/456/g' /etc/hosts # 123替换为456
+sed -i '8i aaa' test/yaml   # 在第8行插入aaa字符
+sed -i '/localhost/a # CUSTOMIZE END' /etc/hosts  # 选项a： 搜索localhost并在下一行添加 '# CUSTOMIZE END'
+# https://www.cnblogs.com/yangsuxia/p/3382410.html  sed空行参考
+sed -i '/monitoring:children/{x;p;x;}' /etc/maine/ustack-hosts # 在搜索字符串的上一行添加空行
 ```
 
 ## curl以及wget使用
@@ -375,6 +379,7 @@ curl [option] [url]
 curl -o /root/123.txt  http://192.168.201.122/index.html  # 将index.html文件保存到/root/并重命名为123.txt
 # -O 将url下载的文件以最后的文件名保存
 curl -O http://192.168.201.122/index.html   # 以index.html报存
+--silent  # 静默下载
 # 更多待补充
 ```
 
@@ -406,3 +411,34 @@ semanage port -l | grep 8880   #查看8880端口标签
 semanage port -a -t http_port_t -p tcp 8880    # 新增标签
 # 增加之后应该就能重启了
 ```
+
+## YUM
+
+> [参考](https://blog.csdn.net/fang_a_kai/article/details/83786750)
+
+```bash
+yum clean all  # 清空缓存
+yum makecache  # 建立缓存
+yum repolist all   # 查看可用仓库
+# 查看可安装的软件包版本
+yum list maine --showduplicates | sort -r # --showduplicates 选项显示具体版本，通过sort 进行排序
+```
+
+# Linux网络基础
+
+## telnet
+
+### 查看服务器的某个端口是否能够访问
+
+用法：
+
+```bash
+telnet <ip> <端口号>
+```
+示例：
+```bash
+telnet 10.0.216.130 8080
+```
+
+连接成功如图：![](./images/telnet-001.png)
+
