@@ -45,7 +45,9 @@ git review
 git reset --hard
 ```
 
+### git cherry-pick
 
+[git cherry-pick 使用指南](https://www.jianshu.com/p/08c3f1804b36)
 
 ## 创建版本库
 

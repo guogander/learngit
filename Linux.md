@@ -2,6 +2,7 @@
 ## 安装VM-tools失败
 
 ```shell
+# Ubuntu18.04
 apt-get install open-vm-tools
 apt-get install open-vm-tools-desktop
 ```
@@ -39,6 +40,13 @@ tar -zxvf 文件名.tar.gz
 tar -zcvf /data/etc.tar.gz /etc # 快
 
 tar -Jcvf /data/etc.tar.xz /etc # 慢 压缩比高
+-C <PATH>  # 解压到指定路径
+-f  # 后面紧跟压缩包
+-v  # 解压详情
+-x  # 解压缩
+-c  # 压缩
+-j  # 有gz2属性
+-z  # gzip属性的
 ```
 
 ## 运行sh脚本
@@ -53,7 +61,7 @@ sudo nautilus
 
 ## 设置静态IP
 
-### Ubuntu
+**Ubuntu**
 
 ```yaml
 # Ubuntu 18.04
@@ -77,7 +85,7 @@ network:
 sudo netplan apply
 ```
 
-### CentOS
+**CentOS**
 
 ```shell
 # CentOS7.9
@@ -149,8 +157,6 @@ ssh-keygen -t rsa  # 生成密钥
 ssh-copy-id <target_ip>  # 将公钥复制到目标主机实现免密登陆
 ```
 
-
-
 ### 错误解决
 
 >cmd ssh远程连接虚拟机，错误信息：
@@ -158,6 +164,14 @@ ssh-copy-id <target_ip>  # 将公钥复制到目标主机实现免密登陆
 >ECDSA host key for 192.168.201.146 has changed and you have requested strict checking.
 >
 >解决方法：命令  ssh-keygen -R "你的远程服务器ip地址"   清除缓存秘钥
+
+### 参数选项
+
+```bash
+# 连接不进行主机密钥检查
+-o StrictHostKeyChecking=no  
+-o UserKnownHostsFile=/dev/null
+```
 
 ## 删除文件夹所有的文件
 
@@ -327,6 +341,8 @@ tmux rename -t 2 test # tmux列表重命名，方便记忆  将2重命名为test
 ```bash
 ctrl+b 松开 按"["进入编辑模式，接着按上下键进行上下滚动
 退出编辑模式按ESC
+# tmux内部切换会话
+ctrl+b 松开 按s，选择需要的会话
 ```
 
 ## VIM基本使用
@@ -346,6 +362,15 @@ dG  # 清空文件
 /<要搜索的字符串>  # 替换掉<>
 # n键跳转到下一个字符串  N跳转上一个字符串
 ```
+
+### 粘贴文件自动注释
+
+```bash
+# 粘贴前执行
+:set paste
+```
+
+
 
 ## 查看动态文本
 
@@ -367,9 +392,9 @@ sed -i '/localhost/a # CUSTOMIZE END' /etc/hosts  # 选项a： 搜索localhost�
 sed -i '/monitoring:children/{x;p;x;}' /etc/maine/ustack-hosts # 在搜索字符串的上一行添加空行
 ```
 
-## curl以及wget使用
+## curl&wget
 
-### curl
+**curl**
 
 ```bash
 # 用法
@@ -379,15 +404,17 @@ curl [option] [url]
 curl -o /root/123.txt  http://192.168.201.122/index.html  # 将index.html文件保存到/root/并重命名为123.txt
 # -O 将url下载的文件以最后的文件名保存
 curl -O http://192.168.201.122/index.html   # 以index.html报存
---silent  # 静默下载
+--silent  # 静默下载，不打印下载信息
+# 超时与重试 https://cloud.tencent.com/developer/article/1581200
 # 更多待补充
 ```
 
-### wget
+**wget**
 
 ```bash
 # 最常使用 直接wget url 下载文件  偏向于下载文件
 wget <url>
+-P <path> # 下载到指定目录
 ```
 
 ## shell命令获取IP地址
@@ -399,7 +426,7 @@ seed_ip=$(ip a | grep ens33 | grep inet | awk '{print $2}' |sed 's/\/.*//')   # 
 ip=$(ifconfig "ens33" | grep "inet " | cut -f 10 -d " ")
 ip=$(ip a | grep eth0 | grep inet | cut -f 6 -d ' ' | cut -f 1 -d '/')
 # cut -f 6 -d ' '  以空格分隔返回第六个，后面同理
-hostname -I | cut -f 1 -d ' '
+hostname -I | cut -f 1 -d ' '   # 最简方法
 ```
 
 ## httpd修改端口后重启报错
@@ -412,7 +439,9 @@ semanage port -a -t http_port_t -p tcp 8880    # 新增标签
 # 增加之后应该就能重启了
 ```
 
-## YUM
+## yum&dnf
+
+！**yum**
 
 > [参考](https://blog.csdn.net/fang_a_kai/article/details/83786750)
 
@@ -423,6 +452,99 @@ yum repolist all   # 查看可用仓库
 # 查看可安装的软件包版本
 yum list maine --showduplicates | sort -r # --showduplicates 选项显示具体版本，通过sort 进行排序
 ```
+
+**dnf**
+
+> 用法同yum
+
+#### 查询模块软件流
+
+```bash
+dnf module list
+dnf module disable nodejs  # 关闭模块软件流
+```
+
+
+
+## Shell
+
+### 正则匹配
+
+```bash
+正则表达式 \w \s \d \b 用法：
+. 匹配除换行符以外的任意字符
+\w 匹配字母或数字或下划线
+\s 匹配任意的空白符
+\d 匹配数字                      等价于[0-9]
+\D 匹配非数字字符
+\b 匹配单词的开始或结束
+^ 匹配字符串的开始
+$ 匹配字符串的结束
+其中，[A-Z]表示除了不包含大写字母，取反;^[A-Z]表示以大写字母开头
+```
+
+### 查看服务
+
+```bash
+ps -aux
+ps -aux|grep httpd  # 会查到此命令的进程
+ps -aux|grep -v grep|grep httpd # 会忽略此命令的进程
+```
+
+### tee
+
+```bash
+# tee指令会从标准输入设备读取数据，将其内容输出到标准输出设备，同时保存成文件。
+# eg:
+ls xxx 2>&1 | tee test.log   # 将ls报错转成标准输出，并将内容输入到test.log文件中  xxx表示不存在的文件
+```
+
+### 更多
+
+```bash
+# 此设置可防止屏蔽管道中的错误。如果管道中的任何命令失败，该返回代码将被用作整个管道的返回代码。
+set -o pipefail
+```
+
+## rz命令
+
+```bash
+yum install -y lrzsz
+```
+
+
+
+## CPU性能测试
+
+测试工具:
+
+>unixbench 
+>
+>https://github.com/cloudharmony/unixbench
+
+> sysbench 
+>
+> https://github.com/akopytov/sysbench#linux
+>
+> https://cloud.tencent.com/developer/article/1468116
+
+
+
+## 网络带宽性能测试
+
+>qperf
+>
+>https://github.com/linux-rdma/qperf/tree/master
+
+> Netperf
+>
+> https://github.com/HewlettPackard/netperf
+
+## 磁盘性能测试
+
+> fio
+>
+> https://github.com/axboe/fio
 
 # Linux网络基础
 

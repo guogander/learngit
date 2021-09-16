@@ -16,13 +16,27 @@ Docker使用了Linux的Namespaces技术来进行资源隔离，如PID Namespace�
 host模式类似于Vmware的桥接模式，与宿主机在同一个网络中，但没有独立IP地址。一个Docker容器一般会分配一个独立的Network Namespace。但如果启动容器的时候使用host模式，那么这个容器将不会获得一个独立的Network Namespace，而是和宿主机共用一个Network Namespace。容器将不会虚拟出自己的网卡，配置自己的IP等，而是使用宿主机的IP和端口。
 ```
 
+### -- rm
 
+```bash
+# 退出容器后就删除该容器，常用于临时调试
+docker run --rm -it registry.ustack.com/centos/ustack-base:7.aarch64 bash
+```
+
+### docker cp
+
+> **docker cp :**用于容器与主机之间的数据拷贝。
+
+```bash
+docker cp /www/runoob 96f7f14e99ab:/www/
+```
 
 
 
 ## 查看私有仓库
 
 ```bash
+# registry默认端口在5000
 curl http://localhost:5000/v2/_catalog
 ```
 
@@ -51,3 +65,35 @@ curl 192.168.121.4:4000/v2/_catalog?n=200 | grep zaqar    # 给定参数n返回�
 ```
 
 [registry分页参数](https://docs.docker.com/registry/spec/api/#pagination)
+
+## Dockerfile
+
+> [Dockerfile参考1](https://www.docker.org.cn/dockerppt/114.html)
+>
+> [Dockerfile参考2](https://docker-practice.github.io/zh-cn/image/build.html)
+
+### FROM
+
+```dockerfile
+# 基础镜像，后续命令都是基于这个镜像进行
+FROM registry.ustack.com/dockerhub-proxy/library/alpine:3.12.0
+```
+
+### RUN
+
+### ENV
+
+### WORKDIR
+
+该指令可以来指定工作目录（或者称为当前目录），以后各层的当前目录就被改为指定的目录，如该目录不存在，WORKDIR 会帮你建立目录。
+
+```dockerfile
+WORKDIR /root
+```
+
+
+
+# Kolla
+
+> [kolla-build](https://docs.openstack.org/kolla/latest/admin/image-building.html#packages-customisation)
+
