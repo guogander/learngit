@@ -72,6 +72,14 @@ curl 192.168.121.4:4000/v2/_catalog?n=200 | grep zaqar    # 给定参数n返回�
 >
 > [Dockerfile参考2](https://docker-practice.github.io/zh-cn/image/build.html)
 
+### dockerfile构建镜像
+
+```bash
+docker build -t <images_name>:<tag> .
+# -t 指定镜像名和标签名
+# 默认找Dockerfile这个文件名进行构建
+```
+
 ### FROM
 
 ```dockerfile
