@@ -370,6 +370,12 @@ dG  # 清空文件
 :set paste
 ```
 
+### 删除多行内容
+
+```bash
+:3,5d # 删除3-5行内容
+```
+
 
 
 ## 查看动态文本
@@ -438,6 +444,17 @@ semanage port -l | grep 8880   #查看8880端口标签
 semanage port -a -t http_port_t -p tcp 8880    # 新增标签
 # 增加之后应该就能重启了
 ```
+
+## httpd web下目录访问报错
+
+> You don’t have permission to access / on this server.
+
+```bash
+# 允许用户HHTP访问其家目录，该设定限仅于用户的家目录主页
+chcon -R -t httpd_sys_content_t ~user/public_html
+```
+
+
 
 ## yum&dnf
 
