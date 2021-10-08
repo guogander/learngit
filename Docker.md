@@ -31,6 +31,22 @@ docker run --rm -it registry.ustack.com/centos/ustack-base:7.aarch64 bash
 docker cp /www/runoob 96f7f14e99ab:/www/
 ```
 
+### docker ps
+
+```bash
+[root@centos7-aarch64-rocky-binary ~]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+b3120d68f2d9        d6a36f04320f        "/bin/sh -c 'yum -..."   About an hour ago   Up About an hour                        awesome_darwin
+```
+
+`--no-trunc`  显示完整信息
+
+```bash
+[root@centos7-aarch64-rocky-binary ~]# docker ps -a --no-trunc
+CONTAINER ID                                                       IMAGE                                                                     COMMAND                                                                                                 CREATED             STATUS              PORTS               NAMES
+b3120d68f2d9835c425e0a400db3706f382cc17c03f1a304cc2379ce05fb3b09   sha256:d6a36f04320f5144153f365a37bae3f8943c441f27380432f1f4ea1c6f6e6aff   "/bin/sh -c 'yum -y install openstack-neutron-bgp-dragent && yum clean all && rm -rf /var/cache/yum'"   2 hours ago         Up 2 hours                              awesome_darwin
+```
+
 
 
 ## 查看私有仓库
