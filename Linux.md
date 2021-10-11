@@ -435,7 +435,9 @@ ip=$(ip a | grep eth0 | grep inet | cut -f 6 -d ' ' | cut -f 1 -d '/')
 hostname -I | cut -f 1 -d ' '   # 最简方法
 ```
 
-## httpd修改端口后重启报错
+## httpd
+
+### httpd修改端口后重启报错
 
 ```bash
 # 极可能原因是selinux端口标签不存在
@@ -445,13 +447,25 @@ semanage port -a -t http_port_t -p tcp 8880    # 新增标签
 # 增加之后应该就能重启了
 ```
 
-## httpd web下目录访问报错
+### httpd web下目录访问报错
 
 > You don’t have permission to access / on this server.
 
 ```bash
 # 允许用户HHTP访问其家目录，该设定限仅于用户的家目录主页
 chcon -R -t httpd_sys_content_t ~user/public_html
+```
+
+### httpd开启目录访问
+
+```bash
+# 添加下面一行
+Options Indexes FollowSymLinks
+
+<Directory />
+    Options Indexes FollowSymLinks
+	...
+</Directory>
 ```
 
 
