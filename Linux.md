@@ -468,6 +468,13 @@ Options Indexes FollowSymLinks
 </Directory>
 ```
 
+### httpd目录中文乱码
+
+```bash
+# 在/etc/httpd/conf/httpd.conf添加下面一行并重启
+IndexOptions Charset=UTF-8
+```
+
 
 
 ## yum&dnf
