@@ -4,7 +4,7 @@
 
 > [中文手册](https://www.docker.org.cn/docker/docker-206.html)
 
-## docker run
+## docker run(运行容器)
 
 ### --network
 
@@ -16,14 +16,50 @@ Docker使用了Linux的Namespaces技术来进行资源隔离，如PID Namespace�
 host模式类似于Vmware的桥接模式，与宿主机在同一个网络中，但没有独立IP地址。一个Docker容器一般会分配一个独立的Network Namespace。但如果启动容器的时候使用host模式，那么这个容器将不会获得一个独立的Network Namespace，而是和宿主机共用一个Network Namespace。容器将不会虚拟出自己的网卡，配置自己的IP等，而是使用宿主机的IP和端口。
 ```
 
-### -- rm
+### --rm
 
 ```bash
 # 退出容器后就删除该容器，常用于临时调试
 docker run --rm -it registry.ustack.com/centos/ustack-base:7.aarch64 bash
 ```
 
-### docker cp
+### -v
+
+> 目录挂载
+>
+> https://docs.docker.com/engine/reference/run/#volume-shared-filesystems
+
+```bash
+# 用法示例
+docker run -it -v /宿主机绝对路径:/容器内目录：权限 镜像名
+```
+
+权限：ro(只读)   rw(读写)，没有设置ro rw默认读写
+
+## docker inspect(获取容器数据)
+
+```bash
+# docker inspect 获取容器元数据
+
+docker inspect 74d549c4d42
+# 可以查看到挂载目录
+...
+"HostConfig": {
+            "Binds": [
+                "/data/harbor/registry:/storage:z",
+                "/root/harbor/common/config/registry:/etc/registry:z"
+            ],
+...
+
+
+# 查看运行容器的IP地址
+[root@guoyaqun ~]# docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 74d549c4d42 
+172.19.0.4
+```
+
+
+
+## docker cp(复制文件)
 
 > **docker cp :**用于容器与主机之间的数据拷贝。
 
@@ -31,7 +67,7 @@ docker run --rm -it registry.ustack.com/centos/ustack-base:7.aarch64 bash
 docker cp /www/runoob 96f7f14e99ab:/www/
 ```
 
-### docker ps
+## docker ps(查看容器)
 
 ```bash
 [root@centos7-aarch64-rocky-binary ~]# docker ps -a
@@ -46,6 +82,8 @@ b3120d68f2d9        d6a36f04320f        "/bin/sh -c 'yum -..."   About an hour a
 CONTAINER ID                                                       IMAGE                                                                     COMMAND                                                                                                 CREATED             STATUS              PORTS               NAMES
 b3120d68f2d9835c425e0a400db3706f382cc17c03f1a304cc2379ce05fb3b09   sha256:d6a36f04320f5144153f365a37bae3f8943c441f27380432f1f4ea1c6f6e6aff   "/bin/sh -c 'yum -y install openstack-neutron-bgp-dragent && yum clean all && rm -rf /var/cache/yum'"   2 hours ago         Up 2 hours                              awesome_darwin
 ```
+
+## docker images(查看镜像)
 
 
 
