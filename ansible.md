@@ -1187,6 +1187,15 @@ vim roles/httpd/tasks/user.yml
             └── user.yml
 ```
 
+## shell忽略错误
+
+> [参考](https://bingostack.com/2021/03/ansible-shell-command/)
+
+```bash
+# 设置下面属性
+ignore_errors: yes
+```
+
 
 
 
