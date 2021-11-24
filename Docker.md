@@ -85,6 +85,8 @@ b3120d68f2d9835c425e0a400db3706f382cc17c03f1a304cc2379ce05fb3b09   sha256:d6a36f
 
 ## docker images(查看镜像)
 
+## docker logs <容器名/ID>(查看容器日志)
+
 
 
 ## 查看私有仓库
