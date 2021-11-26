@@ -191,6 +191,8 @@ netstat -tunlp | grep 端口号
 ## 进程
 
 ```bash
+# 查看进程命令
+ps -aux
 # 杀死进程
 kill -9 pid
 # 0信号查看进程是否存在
