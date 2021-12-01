@@ -329,13 +329,21 @@ $ brew install tmux
 ### 基本使用
 
 ```bash
-tmux  # 启动新窗口(会话)
-tmux ls  # 查看有哪些窗口
-tmux a -t 0   # 进入0号窗口
+tmux  # 启动新会话
+tmux ls  # 查看有哪些会话
+tmux a -t 0   # 进入0号会话
 ctrl+b 松开 按d # 退出tmux
-tmux switch -t 1 # 切换窗口   切换到窗口1
+tmux switch -t 1 # 切换会话  切换到会话1
 tmux kill-session -t 0  # 关闭会话0
 tmux rename -t 2 test # tmux列表重命名，方便记忆  将2重命名为test
+```
+
+```bash
+# 在会话中创建多窗口（已经在某一个会话session中）
+ctrl+b 松开 c  # 在会话中新建另一个窗口(windows)
+ctrl+b 松开 底部数字  # 在session中切换窗口
+ctrl+b 松开 x  # 干掉session中的当前窗口(底部输入y确认)
+ctrl+b 松开 p  # 去前面的一个窗口
 ```
 
 上下滚屏：
