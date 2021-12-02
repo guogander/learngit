@@ -356,4 +356,9 @@ $ git switch master
 $ git log --graph --pretty=oneline
 ```
 
-![image-20210531141016698](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210531141016698.png)
+### 本地分支关联远程分支
+
+```bash
+git branch --set-upstream-to=origin/<remote_branch> <local_branch>
+```
+
