@@ -577,6 +577,16 @@ set -o errexit
 yum install -y lrzsz
 ```
 
+## grep
+
+```bash
+# 在指定目录的文件中搜索字符串，返回查到的具体文件行
+grep -rn <搜索字符串> <搜索路径或指定文件>
+# 例：
+[root@swallow-1 ~]# grep -rn ryze_generic_logo_file /etc/maine-swallow/
+/etc/maine-swallow/globals.yml:86:ryze_generic_logo_file: "generic_logo.png"
+```
+
 
 
 ## CPU性能测试
