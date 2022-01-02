@@ -94,6 +94,9 @@ b3120d68f2d9835c425e0a400db3706f382cc17c03f1a304cc2379ce05fb3b09   sha256:d6a36f
 ```bash
 # registry默认端口在5000
 curl http://localhost:5000/v2/_catalog
+
+# 查看镜像的tag
+curl -XGET http://localhost:5000/v2/镜像名称/tags/list
 ```
 
 ## 将私有仓库添加到docker
