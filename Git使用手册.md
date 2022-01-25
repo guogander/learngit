@@ -362,3 +362,7 @@ $ git log --graph --pretty=oneline
 git branch --set-upstream-to=origin/<remote_branch> <local_branch>
 ```
 
+## 问题总结
+
+- 1.一个分支同时开发多个功能：切换分支前需要`git commit`进行暂存，之后在`git checkout`切换分支就不会将当前修改带到新的本地分支中
+
