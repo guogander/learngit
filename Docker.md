@@ -87,6 +87,36 @@ b3120d68f2d9835c425e0a400db3706f382cc17c03f1a304cc2379ce05fb3b09   sha256:d6a36f
 
 ## docker logs <容器名/ID>(查看容器日志)
 
+## 删除所有容器/镜像
+
+```bash
+# --force 强制删除
+docker rm --force `docker ps -a -q`  # 容器
+docker rmi --force `docker images -q`  # 镜像
+```
+
+## 保存和加载镜像（save、load）
+
+> 当需要把一台机器上的镜像迁移到另一台机器的时候，需要保存镜像与加载镜像。
+
+```bash
+# 保存镜像到一个tar包  
+docker save image_name -o file_path  
+# 加载一个tar包格式的镜像  
+docker load -i file_path  
+  
+# 机器a导出tar包 
+docker save image_name > /home/save.tar  
+# 使用scp将save.tar拷到机器b上，然后：  
+docker load < /home/save.tar
+```
+
+## 容器保存为镜像（commit）
+
+```bash
+docker commit container_id new_image_name
+```
+
 
 
 ## 查看私有仓库
