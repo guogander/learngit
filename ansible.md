@@ -1196,6 +1196,15 @@ vim roles/httpd/tasks/user.yml
 ignore_errors: yes
 ```
 
+## 获取ip信息
+
+```jinja2
+# hostvars获取ip信息
+{{ hostvars[groups['control'][0]]['ansible_' + hostvars[groups['control'][0]]['network_interface']]['ipv4']['address'] }}
+# net_mask
+{{ hostvars[groups['control'][0]]['ansible_' + hostvars[groups['control'][0]]['network_interface']]['ipv4']['network'] }}/{{ hostvars[groups['control'][0]]['ansible_' + hostvars[groups['control'][0]]['network_interface']]['ipv4']['netmask'] }}
+```
+
 
 
 
