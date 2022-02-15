@@ -194,3 +194,19 @@ WORKDIR /root
 
 > [kolla-build](https://docs.openstack.org/kolla/latest/admin/image-building.html#packages-customisation)
 
+> [参数使用参考1](https://www.cnblogs.com/potato-chip/p/9561218.html)
+
+## 实际命令
+
+```bash
+kolla-build --template-only --config-file /tmp/kolla_build.conf 2>&1 | tee /root/kolla_build.log
+```
+
+## 参数解释
+
+```bash
+--template-only   # 只生成Dockerfile不构建镜像
+--config-file     # 配置文件，配置项都可以写在这个文件里面
+--template-override  # 指定文件，自定义block覆盖上游Dockerfile.j2
+```
+

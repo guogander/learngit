@@ -363,6 +363,39 @@ ansible web -m replace -a "path=/etc/fstab regexp='^#(UUID.*)' replace='#\1'"
 ansible web -m replace -a "path=/etc/fstab regexp='^#(.*)' replace='\1'"
 ```
 
+> 在playbook中的使用
+
+示例文件`test.py`：
+
+```python
+        if self.base in rh_base and self.base_tag.startswith('7'):
+            self.conf.distro_python_version = "2.7"
+        elif self.base in rh_base and self.base_tag.startswith('8'):
+            self.conf.distro_python_version = "3.6"
+        elif self.base in ['debian']:
+            self.conf.distro_python_version = "3.7"
+        elif self.base in ['ubuntu']:
+            self.conf.distro_python_version = "3.6"
+        else:
+            # Assume worst
+            self.conf.distro_python_version = "2.7"
+```
+
+要将`startswith('8')`替换为`startswith('stream8')`(括号使用\转义):
+
+```bash
+- hosts: localhost
+  remote_user: root
+  tasks:
+  - name: debug
+    replace:
+      path: /root/test.py
+      regexp: "startswith\\('7'\\)"
+      replace: "startswith('stream8')"
+```
+
+
+
 ### setup
 
 > 收集远程主机系统信息   默认收集fact信息，主机较多的话会慢，可以使用`gather_facts: no`来禁止Ansible收集facts信息
