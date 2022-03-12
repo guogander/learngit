@@ -269,6 +269,9 @@ iptables -t nat -I PREROUTING -p tcp --dport 8880 -j REDIRECT --to-ports 8880   
 iptables -t nat -L -n --line-numbers   # nat表
 # 根据序号删除，这里假如它的序号是1
 iptables -t nat -D PREROUTING 1   # 删除nat表的PREROUTING链序号为1的规则
+
+# 删除本机端口转发(8080 -> 3000的转发)
+iptables -t nat -D PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 3000
 ```
 
 ## Windows本地文件传输到Linux
